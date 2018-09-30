@@ -8,7 +8,6 @@ import json
 
 import numpy as np
 import pymongo
-import simplejson as simplejson
 
 
 class ScrapyliuxyPipeline(object):
@@ -42,16 +41,11 @@ class MongoPipeline(object):
         # print('-----', json.dumps(item._value()))
         # item.
         # a = item.__str__()
-        jsondate = simplejson.load(item)
-        self.db[self.collection_name].insert_one(jsondate)
+        item_dict = dict(item)
+        print('item_dict=', item_dict)
+        # jsondateye = json.dumps(item_dict)
+        # print('jsondateye=', jsondateye)
+        self.db[self.collection_name].insert_one(item_dict).inserted_id
         return item
 
-
-class MyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        elif isinstance(obj, bytes):
-            return str(obj, encoding='utf-8');
-        return json.JSONEncoder.default(self, obj)
 

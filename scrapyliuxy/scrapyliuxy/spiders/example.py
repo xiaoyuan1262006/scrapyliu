@@ -56,12 +56,12 @@ class ExampleSpider(scrapy.Spider):
 
         for quote in response.css('div.quote'):
             # for i in range(1, 5):
-            # text = quote.css('span.text::text').extract_first()#response.xpath("//span[1]/text()").extract_first(default='not-found')
+            text = quote.css('span.text::text').extract_first()#response.xpath("//span[1]/text()").extract_first(default='not-found')
             author = quote.css('small.author::text').extract_first()#response.xpath("//small[1]/text()").extract_first(default='not-found')
             tags = quote.css('div.tags a.tag::text').extract()#response.xpath("//div[@class='tags']/a[@class='tag']/text()").extract()
             # print('xx==', text)
             ll = QuotesItem()
-            # ll['text'] = text
+            ll['text'] = text
             ll['author'] = author
             ll['tags'] = tags
 
